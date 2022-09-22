@@ -11,10 +11,11 @@ export function getStatus () {
   return axios.get(`${URL}/work-entries`, config)
 }
 
-export function checkIn () {
-  return axios.post(`${URL}/workentries/clock-in`, config)
+export function checkIn (data) {
+  console.log('data --> ', data)
+  return axios.post(`${URL}/work-entries/clock-in`, data, config)
 }
 
-export function checkOut () {
-  return axios.post(`${URL}/workentries/clock-out`, config)
+export function checkOut (data) {
+  return axios.post(`${URL}/work-entries/clock-out`, data, config)
 }

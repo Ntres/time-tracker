@@ -13,6 +13,7 @@
     "@vue-hero-icons/solid": "^1.7.2",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "easytimer.js": "^4.5.4",
     "flowbite": "^1.5.3",
     "vue": "^3.2.13"
   },
