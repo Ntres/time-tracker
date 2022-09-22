@@ -7,12 +7,10 @@ const config = {
 };
 
 export function getStatus () {
-  console.log('entro')
   return axios.get(`${URL}/work-entries`, config)
 }
 
 export function checkIn (data) {
-  console.log('data --> ', data)
   return axios.post(`${URL}/work-entries/clock-in`, data, config)
 }
 

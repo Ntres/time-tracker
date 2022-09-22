@@ -11,21 +11,21 @@
         <img src="../assets/avatar-user.png" alt="user avatar" class="object-cover h-7 w-7">
         <div class="bg-green-dot h-2 w-2 rounded-full absolute bottom-3 left-6"></div>
       </div>
-      <DropdownMenu :firstName="this.myEmployer.employee.firstName" :lastName="this.myEmployer.employee.lastName"/>
+      <MenuDropdown :firstName="this.myEmployer.employee.firstName" :lastName="this.myEmployer.employee.lastName"/>
     </div>
   </div>
 </template>
 
 <script>
 import { getStatus, checkIn, checkOut } from '../utils/api.js'
-import DropdownMenu from './DropdownMenu.vue'
+import MenuDropdown from './MenuDropdown.vue'
 import { Timer } from 'easytimer.js'
 
 export default {
   name: 'App',
   components: {
-    DropdownMenu
-  },
+    MenuDropdown
+},
   data() {
     return {
       loading: true,
@@ -46,7 +46,6 @@ export default {
         this.myEmployer = resp.data.data[0]
         this.workStatus = this.myEmployer.employee.workStatus
         this.loading = false
-        console.log('myEmployer --> ', this.myEmployer)
       }).catch(err => {
         alert('error', err)
       })
@@ -55,7 +54,6 @@ export default {
       const data = {
         'employeeId': this.myEmployer.employee.id,
         'workEntryIn': {
-          'date': new Date(),
           'coordinates': {
             'latitude': 39.9810198,
             'longitude': -0.0292415
@@ -73,7 +71,6 @@ export default {
       const data = {
         'employeeId': this.myEmployer.employee.id,
         'workEntryOut': {
-          'date': new Date(),
           'coordinates': {
             'latitude': 39.9810198,
             'longitude': -0.0292415
@@ -94,7 +91,6 @@ export default {
       const data = {
         'employeeId': this.myEmployer.employee.id,
         'workEntryOut': {
-          'date': new Date(),
           'coordinates': {
             'latitude': 39.9810198,
             'longitude': -0.0292415
