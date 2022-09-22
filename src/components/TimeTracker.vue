@@ -2,7 +2,7 @@
   <div class="justify-center flex bg-extra-ligh-grey items-center h-screen">
     <div v-if="!loading" class="flex items-center py-2 px-6 bg-ligh-grey/20 rounded-full shadow-md">
       <p class="text-xs mr-2">{{ timer ? timer : '00:00:00' }}</p>
-      <p class="text-xs mr-2 text-black/20">/ 04:20:21</p>
+      <p class="text-xs mr-2 text-black/20">/ {{countDownTimer ? countDownTimer : '00:00:00'}}</p>
       <button v-if="workStatus === 'offline'" class="text-white text-xs bg-green-btn rounded-full py-2 px-9 mr-2.5" v-on:click="checkIn">ENTRAR</button>
       <button v-if="workStatus === 'online'" class="text-white text-xs bg-ligh-grey rounded-full py-2 px-9 mr-2.5" v-on:click="pause">PAUSA</button>
       <button v-if="workStatus === 'online'" class="text-white text-xs bg-salmon rounded-full py-2 px-9 mr-2.5" v-on:click="checkOut">SALIR</button>
@@ -32,7 +32,9 @@ export default {
       myEmployer: {},
       workStatus: '',
       aTimer: new Timer(),
-      timer: ''
+      aCountDownTimer: new Timer(),
+      timer: '',
+      countDownTimer: ''
     }
   },
   mounted () {
@@ -60,8 +62,7 @@ export default {
           }
         }
       }
-      checkIn(data).then(el => {
-        console.log('data -->', el)
+      checkIn(data).then( () => {
         this.workStatus = 'online'
         this.InitTimer()
       }).catch(err => {
@@ -79,10 +80,12 @@ export default {
           }
         }
       }
-      checkOut(data).then(el => {
-        console.log('data -->', el)
+      checkOut(data).then( () => {
         this.workStatus = 'offline'
         this.aTimer.stop()
+        this.aCountDownTimer.stop()
+        this.timer = '00:00:00'
+        this.countDownTimer = '00:00:00'
       }).catch(err => {
         alert('error', err)
       })
@@ -98,10 +101,10 @@ export default {
           }
         }
       }
-      checkOut(data).then(el => {
-        console.log('data -->', el)
+      checkOut(data).then( () => {
         this.workStatus = 'offline'
         this.aTimer.pause()
+        this.aCountDownTimer.pause()
       }).catch(err => {
         alert('error', err)
       })
@@ -110,6 +113,13 @@ export default {
       this.aTimer.start({ precision: 'seconds', startValues: { seconds: this.seconds } })
       this.aTimer.addEventListener('secondsUpdated', () => {
         this.timer = this.aTimer.getTimeValues().toString()
+      })
+      this.aCountDownTimer.start({countdown: true, startValues: {seconds: 28800}})
+      this.aCountDownTimer.addEventListener('secondsUpdated', () => {
+        this.countDownTimer = this.aCountDownTimer.getTimeValues().toString()
+      })
+      this.aCountDownTimer.addEventListener('targetAchieved', () => {
+          this.countDownTimer = 'Jornada completada'
       })
     }
   },
